@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if username %}
+    <p>You may also want to log out from drchrono. Otherwise if someone else registers
+    an account for this service on this computer, the currently logged in drchrono user
+    will automatically be used in linking the new account with drchrono.
+    <br>
+    To avoid sharing your patients, log out from drchrono by pressing this link:</p>
+    <p><a href=https://{{ username }}.drchrono.com/accounts/logout/>logout drchrono</a></p>
+{% else %}
+    <p>You've already logged out. Don't forget to also log out of drchrono if other doctors
+       are going to use this site on this computer.</p>
+{% endif %}
+{% endblock %}

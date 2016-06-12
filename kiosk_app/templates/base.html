@@ -1,0 +1,28 @@
+{% load staticfiles %}
+
+<html>
+<head>
+<title>Check-in Kiosk</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <div class="header">
+        <h1><a href="/">Check-in Kiosk</a></h1>
+        {% if request.user.doctor %}
+        <span id=span4><a href=/logout/>Logout</a></span>
+        <span id=span3><a href="/about/">About</a></span>
+        <span id=span2><a href="/">Home</a></span>
+        <span id=span1>Logged in as: {{ request.user.username }}</span>
+        {% else %}
+        <span id=span4><a href="/login/">Login</a></span>
+        <span id=span3><a href="/register">Register</a></span>
+        <span id=span2><a href="/about/">About</a></span>
+        <span id=span1><a href="/">Home</a></span>
+        {% endif %}
+    </div>
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>

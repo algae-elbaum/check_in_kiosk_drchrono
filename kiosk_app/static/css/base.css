@@ -1,0 +1,19 @@
+.header {
+    top:0; bottom:0; left:0;
+    width:100%;
+    height:75px;
+    background:lightgrey;
+}
+.header > h1 { display: inline-block; 
+               margin-left: 100px;}
+.header #span1 { float:right; margin-right: 50px; margin-top: 25px; }
+.header #span2 { float:right; margin-right: 50px; margin-top: 25px; }
+.header #span3 { float:right; margin-right: 50px; margin-top: 25px; }
+.header #span4 { float:right; margin-right: 100px; margin-top: 25px; }
+
+#content { width:1250px; height:85%;
+           margin:25px 0 5px 100px; padding:0 0 0 10px
+}
+
+
+body { font-size: 200%; }

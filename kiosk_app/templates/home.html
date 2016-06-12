@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if not request.user.doctor.access_token %}
+Please link your account with drchrono by <a href=/authorize/>logging in with drchrono</a>.
+{% else %}
+<p><a href=/check_ins/>View patient check-ins</a></p>
+<p><a href=/kiosk/>Enter check-in kiosk</a></p>
+{% endif %}
+{% endblock %}

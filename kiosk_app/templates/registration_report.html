@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if success %}
+    <p>Successfully registered!</p>
+    <p>You should now <a href=/login/>log in</a>
+    <br>
+    <p>After logging in, you will be promted to log in with your drchrono
+    account, and after doing so your account will be completely set up.
+    </p>
+{% else %}
+    <p>{{ user_form.errors }}</p>
+    <br>
+    <p>Registration failed :( <a href=/register/>Click here</a> to try again</p>
+    <p>Or <a href=/>click here</a> to be taken back to the home page</p>
+{% endif %}
+{% endblock %}

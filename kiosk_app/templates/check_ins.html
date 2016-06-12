@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{# This template largely ripped from the django docs on how to use their pagination #}
+
+{% block content %}
+{% for chk in check_ins %}
+    {# Each "chk" is a Check_in model object. #}
+    {{ chk.patient_name }}<br />
+    ...
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if check_ins.has_previous %}
+            <a href="?page={{ check_ins.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ check_ins.number }} of {{ check_ins.paginator.num_pages }}.
+        </span>
+
+        {% if check_ins.has_next %}
+            <a href="?page={{ check_ins.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
