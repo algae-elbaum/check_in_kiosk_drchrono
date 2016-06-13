@@ -1,0 +1,29 @@
+ {% extends "min_base.html" %}
+
+{% block content %}
+
+<div id="medications">
+    Medications:<br>
+    {% for med in meds %}
+        {{ med.name }}, {{ med.dosage_quantity }} {{ med.dosage_units }}
+        per {{ med.dosage_frequency }} <br>
+    {% endfor %}
+</div>
+<br>
+<div id="allergies">
+    Allergies:<br>
+    {% for al in allergies %}
+        {{ al.description }}, ({{ al.status }})
+    {% endfor %}
+</div>
+<br>
+
+<div id="kiosk_data_form">
+    <form method="post" action="/kiosk_data/">
+        {% csrf_token %}
+        {% for field in data_form %}
+            {{ field.label_tag }} {{ field }} <br>
+        {% endfor %}
+    </form>
+</div>
+{% endblock %}

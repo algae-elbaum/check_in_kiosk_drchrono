@@ -1,0 +1,18 @@
+{% extends "min_base.html" %}
+
+{% block content %}
+<form method="post" action="/kiosk_data/">
+    {% csrf_token %}
+    <label for=firstname>First name:</label>
+    <input type="text" name="firstname" id="firstname" autocomplete="off"><br>
+    <label for=lastname>Last name:</label>
+    <input type="text" name="lastname" id="lastname" autocomplete="off"><br>
+    <label for=dob>Date of birth:</label>
+    <input type="date" name="dob" id="dob" autocomplete="off"><br>
+    <label for=ssn>Social security number:</label>
+    <input type="number" min=100000000 max=999999999 name="ssn"
+            id="ssn" autocomplete="off"><br>
+ 
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}
