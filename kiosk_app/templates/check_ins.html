@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
-{# This template largely ripped from the django docs on how to use their pagination #}
+{% block js %}
+// Refresh every 5 seconds to see new check-ins
+setTimeout("location.reload(true);",5000);
+{% endblock %}
 
 {% block content %}
 <table>

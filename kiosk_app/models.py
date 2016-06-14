@@ -149,7 +149,7 @@ class CheckIn(models.Model):
     gender = models.CharField(max_length=6, default='', choices=GENDER_CHOICES)
     date_of_birth = models.DateField()
     social_security_number = models.CharField(max_length=15, default='')
-    race = models.CharField(max_length=30, default='', choices=RACE_CHOICES)
+    race = models.CharField(max_length=40, default='', choices=RACE_CHOICES)
     ethnicity = models.CharField(max_length=30, default='',
                                  choices=ETH_CHOICES)
     preferred_language = models.CharField(max_length=20, default='',
