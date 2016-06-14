@@ -8,6 +8,8 @@ from globs import redirect_uri
 
 @login_required
 def logout(request):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     # If the user was a properly logged in user with a username, remind them
     # that they may also want to log out from drchrono
     if hasattr(request.user, 'doctor') and request.user.doctor.username:
@@ -20,6 +22,8 @@ def logout(request):
         return redirect('landing')
 
 def register(request):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     # If there's a user logged in, require them to log out
     if request.user.is_authenticated():
         return redirect('manual_logout')
@@ -51,6 +55,8 @@ def register(request):
 
 @login_required
 def manual_logout(request):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     return render(request, 'manual_logout.html')    
 
 

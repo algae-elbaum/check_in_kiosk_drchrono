@@ -3,9 +3,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from forms import CheckInForm
 
+
 # This landing page for the site. User will be asked to log in through drchrono
 # and then redirected to the home page
 def landing(request):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     if request.user.is_authenticated():
         return redirect('home')
     # else:
@@ -14,6 +17,8 @@ def landing(request):
 # Gives links to enter kiosk mode or see the most recent check-ins
 @login_required
 def home(request):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     if not request.user.is_authenticated():
         return redirect('landing')
     return render(request, 'home.html')
@@ -21,6 +26,8 @@ def home(request):
 # Gives a paginated list of check-ins, starting from the most recent 
 @login_required
 def get_check_ins(request):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     doctor = request.user.doctor
     check_in_list = doctor.checkin_set.order_by('-date_time')
     paginator = Paginator(check_in_list, 25) # Show 25 per page
@@ -35,6 +42,8 @@ def get_check_ins(request):
 
 @login_required
 def check_in_data(request, id_str):
+    if request.session.get('patient_mode'):
+        return redirect('kiosk')
     doctor = request.user.doctor
     check_in = doctor.checkin_set.get(id=str(id_str))
     check_in_form = CheckInForm(instance=check_in)
@@ -44,6 +53,7 @@ def check_in_data(request, id_str):
 # kiosk_data.
 @login_required
 def kiosk_home(request):
+    request.session['patient_mode'] = True
     return render(request, 'kiosk_home.html')
 
 # Gives a form giving the patient a chance to update their info. Default

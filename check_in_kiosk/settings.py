@@ -129,4 +129,4 @@ STATIC_URL = '/static/'
 # This setting allows the doctor to get back the the main page even
 # after entering kiosk mode. The doctor must completely shut down and
 # restart the browser
-#SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
