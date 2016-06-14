@@ -6,5 +6,11 @@ Please link your account with drchrono by <a href=/authorize/>logging in with dr
 {% else %}
 <p><a href=/check_ins/>View patient check-ins</a></p>
 <p><a href=/kiosk/>Enter check-in kiosk</a></p>
+(Entering the kiosk will lock this browser session from using any pages not directly
+ involved in using the kiosk. Closing the browser and reopening it will start a new
+ session and require you to log in again. In Chrome, in order for a new session to be
+ properly created instead of just continuing the old one, you may have to turn off the
+ following settings: "Continue running background apps when Google Chrome is closed",
+ and "On startup: Continue where you left off")
 {% endif %}
 {% endblock %}
