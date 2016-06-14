@@ -3,12 +3,19 @@
 {# This template largely ripped from the django docs on how to use their pagination #}
 
 {% block content %}
+<table>
+<tr>
+<td style="padding:0 15px 0 15px;"><u>Patient Name</u></td>
+<td style="padding:0 15px 0 15px;"><u>Check-in date/time</u></td>
+</tr>
 {% for chk in check_ins %}
+    <tr>
     {# Each "chk" is a Check_in model object. #}
-    {{ chk.patient_name }}<br />
-    ...
+    <td style="padding:0 15px 0 15px;">{{ chk.first_name }} {{ chk.last_name }}</td>
+    <td style="padding:0 15px 0 15px;">{{ chk.date_time }}</td>
+    </tr>
 {% endfor %}
-
+</table>
 <div class="pagination">
     <span class="step-links">
         {% if check_ins.has_previous %}

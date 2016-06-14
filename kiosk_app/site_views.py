@@ -22,7 +22,7 @@ def home(request):
 @login_required
 def get_check_ins(request):
     doctor = request.user.doctor
-    check_in_list = doctor.check_in_set.order_by('date_time')
+    check_in_list = doctor.checkin_set.order_by('-date_time')
     paginator = Paginator(check_in_list, 25) # Show 25 per page
     page = request.GET.get('page')
     try:
@@ -47,10 +47,17 @@ def kiosk_home(request):
 # values are obtained from the drchrono api
 @login_required
 def kiosk_data(request):
-    patient_data = request.user.doctor.get_patient_data(request.POST['firstname'],
-                                                        request.POST['lastname'],
-                                                        request.POST['ssn'])
-    data_form = CheckInForm(initial=patient_data)
+    patient_data =\
+        request.user.doctor.get_patient_data(request.POST['first_name'],
+                                             request.POST['last_name'],
+                                             request.POST['social_security_number'])
+    # The patient will be sent back to this view if they filled in the form
+    # incorrectly. In that case the request will have an old_form attribute
+    # and we should use that as our form
+    if hasattr(request, 'old_form'):
+        data_form = request.old_form
+    else:
+        data_form = CheckInForm(initial=patient_data)
     if patient_data:
         context = {'data_form': data_form,
                    'meds': patient_data['meds'],
@@ -58,6 +65,18 @@ def kiosk_data(request):
         return render(request, 'kiosk_data.html', context)
     else:
         return render(request, 'invalid_patient.html')
+
+@login_required
+def process_check_in(request):
+    check_in_form = CheckInForm(request.POST)
+    if check_in_form.is_valid():
+        check_in = check_in_form.save(commit=False)
+        check_in.doctor = request.user.doctor
+        check_in.save()
+        return redirect('kiosk')
+    else:
+        request.old_form = check_in_form
+        return kiosk_data(request)
 
 def about(request):
     return render(request, 'about.html')

@@ -35,7 +35,8 @@ class Doctor(models.Model):
 
         # Filter the resulting patients on whether the ssn matches
         ssn_to_int = lambda s: int(''.join(c for c in s if c.isdigit()))
-        filtered = filter(lambda p: ssn_to_int(p['social_security_number']) == int(ssn),
+        i_ssn = ssn_to_int(ssn)
+        filtered = filter(lambda p: ssn_to_int(p['social_security_number']) == i_ssn,
                           patients)
         if (len(filtered) == 0):
             return None
@@ -135,7 +136,7 @@ class CheckIn(models.Model):
 
     # The longest name in the world is something like 225 characters. Let's 
     # allow some leeway
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, default=None)
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
     date_time = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=256, default='')
     last_name = models.CharField(max_length=256, default='')
@@ -144,7 +145,7 @@ class CheckIn(models.Model):
     nickname = models.CharField(max_length=50, default='')
     gender = models.CharField(max_length=6, default='', choices=GENDER_CHOICES)
     date_of_birth = models.DateField()
-    social_security_number = models.CharField(max_length=9, default='')
+    social_security_number = models.CharField(max_length=15, default='')
     race = models.CharField(max_length=12, default='', choices=RACE_CHOICES)
     ethnicity = models.CharField(max_length=11, default='',
                                  choices=ETH_CHOICES)

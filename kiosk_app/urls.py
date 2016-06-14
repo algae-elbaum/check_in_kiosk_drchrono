@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^kiosk/', site_views.kiosk_home, name='kiosk'),
     # kiosk doesn't look like a word anymore
     url(r'^kiosk_data/', site_views.kiosk_data, name='kiosk_data'),
+    url(r'^process_check_in/', site_views.process_check_in, name='process_check_in'),
     url(r'^about/', site_views.about, name='about'),
    
     url(r'^authorize/', authorization_views.authorize, name='authorize'),
