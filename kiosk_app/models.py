@@ -74,10 +74,11 @@ class Doctor(models.Model):
                             'do_you_use_online_scheduling',
                             'do_you_want_acess_to_online_portal']
             try:
+                formatted_ssn = '-'.join([ssn[:3], ssn[3:5], ssn[5:]])
                 last_check_in =\
-                    self.check_in_set.filter(social_security_number=ssn).latest('date_time')
+                    self.checkin_set.filter(social_security_number=formatted_ssn).latest('date_time')
                 for k in keys_to_copy:
-                    patients[k] = last_check_in[k]
+                    patient[k] = getattr(last_check_in, k)
             except:
                 pass
             return patient
@@ -106,16 +107,18 @@ class CheckIn(models.Model):
                       ('Male', 'Male'), 
                       ('Other', 'Other')]
     RACE_CHOICES = [('', ''),
-                    ('indian', 'American Indian or Alaska Native'),
-                    ('asian', 'Asian'),
-                    ('black', 'Black or African American'),
-                    ('hawaiian', 'Native Hawaiian or Other Pacific Islander'),
-                    ('white', 'White'),
-                    ('declined', 'Decline to specify')]
+                    ('American Indian or Alaska Native',
+                        'American Indian or Alaska Native'),
+                    ('Asian', 'Asian'),
+                    ('Black or African American', 'Black or African American'),
+                    ('Native Hawaiian or Other Pacific Islander',
+                        'Native Hawaiian or Other Pacific Islander'),
+                    ('White', 'White'),
+                    ('Declined to specify', 'Decline to specify')]
     ETH_CHOICES = [('', ''),
-                   ('hispanic', 'Hispanic or Latino'),
-                   ('not_hispanic', 'Not Hispanic or Latino'),
-                   ('declined', 'Decline to specify')]
+                   ('Hispanic or Latino', 'Hispanic or Latino'),
+                   ('Not Hispanic or Latino', 'Not Hispanic or Latino'),
+                   ('Declined to specify', 'Decline to specify')]
     LANGUAGE_CHOICES = [('', ''),
                         ('eng', 'English'),
                         ('zho', 'Chinese'),
@@ -129,10 +132,10 @@ class CheckIn(models.Model):
                         ('unknown', 'Unknown'),
                         ('declined', 'Decline to specify')]
     STUDENT_CHOICES = [('', ''),
-                       ('E', 'Employed'),
-                       ('F', 'Full-time student'),
-                       ('N', 'Not a Student'),
-                       ('P', 'Part-time Student')]
+                       ('Employed', 'Employed'),
+                       ('Full-time Student', 'Full-time Student'),
+                       ('Not a Student', 'Not a Student'),
+                       ('Part-time Student', 'Part-time Student')]
 
     # The longest name in the world is something like 225 characters. Let's 
     # allow some leeway
@@ -146,8 +149,8 @@ class CheckIn(models.Model):
     gender = models.CharField(max_length=6, default='', choices=GENDER_CHOICES)
     date_of_birth = models.DateField()
     social_security_number = models.CharField(max_length=15, default='')
-    race = models.CharField(max_length=12, default='', choices=RACE_CHOICES)
-    ethnicity = models.CharField(max_length=11, default='',
+    race = models.CharField(max_length=30, default='', choices=RACE_CHOICES)
+    ethnicity = models.CharField(max_length=30, default='',
                                  choices=ETH_CHOICES)
     preferred_language = models.CharField(max_length=20, default='',
                                           choices=LANGUAGE_CHOICES)
@@ -173,7 +176,7 @@ class CheckIn(models.Model):
     secondary_insurance_group = models.CharField(max_length=100, default='')
     secondary_insurance_plan = models.CharField(max_length=100, default='')
     is_secondary_insurance_subscriber_the_same_as_the_patient = models.BooleanField()
-    patient_student_status = models.CharField(max_length = 10, default = '',
+    patient_student_status = models.CharField(max_length = 20, default = '',
                                               choices=STUDENT_CHOICES)
     where_did_you_find_us = models.CharField(max_length=100, default='')
     what_specialists_do_you_see = models.TextField()
@@ -193,4 +196,5 @@ class CheckIn(models.Model):
     def __str__(self): 
         return self.patient_name + " check-in, " + str(self.date_time)
 
-
+    def get_absolute_url(self):
+        return '/check_ins/' + str(self.id)

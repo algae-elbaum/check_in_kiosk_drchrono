@@ -11,7 +11,12 @@
 {% for chk in check_ins %}
     <tr>
     {# Each "chk" is a Check_in model object. #}
-    <td style="padding:0 15px 0 15px;">{{ chk.first_name }} {{ chk.last_name }}</td>
+    
+    <td style="padding:0 15px 0 15px;">
+        <a href="{{ chk.get_absolute_url }}">
+        {{ chk.first_name }} {{ chk.last_name }}
+        </a>
+    </td>
     <td style="padding:0 15px 0 15px;">{{ chk.date_time }}</td>
     </tr>
 {% endfor %}

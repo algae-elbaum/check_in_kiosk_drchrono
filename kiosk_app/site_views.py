@@ -32,10 +32,13 @@ def get_check_ins(request):
     except EmptyPage:
         check_ins = paginator.page(paginator.num_pages)
     return render(request, 'check_ins.html', {'check_ins': check_ins})
-    
+
 @login_required
-def check_in_data(request):
-    pass
+def check_in_data(request, id_str):
+    doctor = request.user.doctor
+    check_in = doctor.checkin_set.get(id=str(id_str))
+    check_in_form = CheckInForm(instance=check_in)
+    return render(request, 'check_in_data.html', {'check_in': check_in_form})
 
 # Gives a form for patients to enter identifying data and be redirected to
 # kiosk_data.

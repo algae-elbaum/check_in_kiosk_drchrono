@@ -7,6 +7,8 @@ import site_views, authorization_views, account_views
 urlpatterns = [
     url(r'^$', site_views.landing, name='landing'),
     url(r'^home/', site_views.home, name='home'),
+    url(r'^check_ins/([0-9]+)', site_views.check_in_data,
+                                            name='check_in_data'),
     url(r'^check_ins/', site_views.get_check_ins, name='get_check_ins'),
     url(r'^kiosk/', site_views.kiosk_home, name='kiosk'),
     # kiosk doesn't look like a word anymore

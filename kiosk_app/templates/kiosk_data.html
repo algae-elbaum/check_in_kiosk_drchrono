@@ -24,7 +24,7 @@
 {% endif %}
 <br>
 <div id="kiosk_data_form">
-    <form method="post" action="/process_check_in/">
+    <form method="post" action="/process_check_in/" autocomplete="off">
         {% csrf_token %}
         {% for field in data_form %}
             {{ field.label_tag }} {{ field }} <br>
