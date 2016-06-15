@@ -5,8 +5,12 @@
 <div id="medications">
     Medications:<br>
     {% for med in meds %}
-        {{ med.name }}, {{ med.dosage_quantity }} {{ med.dosage_units }}
-        per {{ med.dosage_frequency }} <br>
+        {{ med.name }}
+        {% if med.dosage_units %}
+            -> {{ med.dosage_quantity }} {{ med.dosage_units }}
+            per {{ med.dosage_frequency }}
+        {% endif %}
+        <br>
     {% endfor %}
 </div>
 <br>
