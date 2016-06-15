@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for field in check_in %}
+        {{ field.label_tag }} {{ field.value }} <br>
+    {% endfor %}
+{% endblock %}

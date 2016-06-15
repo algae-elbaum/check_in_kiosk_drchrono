@@ -86,7 +86,7 @@ def process_check_in(request):
         check_in = check_in_form.save(commit=False)
         check_in.doctor = request.user.doctor
         check_in.save()
-        return redirect('kiosk')
+        return render(request, 'kiosk_finish.html')
     else:
         request.old_form = check_in_form
         return kiosk_data(request)
